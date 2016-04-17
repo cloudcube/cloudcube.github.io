@@ -1,0 +1,30 @@
+
+language: node_js
+node_js: stable
+
+# S: Build Lifecycle
+install:
+  - npm install
+
+before_script:
+  - npm install hexo -g
+script:
+  - hexo clean && hexo g
+
+after_script:
+  - cd public
+  - git init
+  - git config user.name "zhaohaibin"
+  - git config user.email "zhaohaibin@outlook.com"
+  - git add .
+  - git commit -m "Update docs"
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
+# E: Build LifeCycle
+
+branches:
+  only:
+    - source
+env:
+ global:
+   - GH_REF: github.com/cloudcube/cloudcube.github.io.git
+   - secure: "pnvLiRvZALOTUewoj+uRaqjhOGp1w1sa1JmMb9vPAFnYt+7SDNZeuBZyLeuOSwsXrcTQQYy2uYCy7yOKmzA3tdv9GDVKuleKzqXo/jK1fTCC3hJH2Ot3jVBiUqSW4LbAZWZmOYe7nogns/XD3FMtSWyvZmVcoytv/J0oll33Ji5RL1NIAb3vYRd9/lLRyKICC98yVHJO51CSfWdCqo7LfV2m7dmQV5I8YCgAMLxUHrn+q/VIc6x52LAEHsAJoKS62RaojlTREZ1l7HZIHxJMEzay27vHzXvhpTSONlagfDDacr6zkHFyhdPvRqfmGTOYGdTNxg4l/5dCIW2agG2Eh3AX4H4HIEpwWFw+tUidFAGZGEYkCXxJlRhF7cDZzStvSEu7qZBe+JXu/kOScR27QBU33UpRNWafDG5lQSSc9h9K6HGBz35Tbc2ND4zEFcMGR6wBZPwPbaZ/VlbVnQ4pZEA7a3YMyoQO1Shq/l69tSxB13Ar2eLdZ1JlBF+2CrHTV6Dlc9ajca5BMXHLBOV8DGlF/6A2lmZyuKINHWb8hR+3X0rqe42+Ey75doNwxu+sJ2TdR9Aq/GXSCTVrl5YlvCMgjwPeo1gxc8Iv92Hv2zvR194OrXIRj/n4PtpKio4ebbEY06xK8xqNHByDtPDy8zVcSS9vy4OsI5LCf7WofLE="
